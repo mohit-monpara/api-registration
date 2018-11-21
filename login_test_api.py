@@ -12,10 +12,15 @@ app.config["DEBUG"] = True
 def home():
 	return "Hello, World!!!"
 
+@app.route("/false_credentials")
+def false_credentials():
+	return "Unable to login"
+
 
 @app.route('/welcome')
 def welcome():
-    return render_template('welcome.html')
+	return "Successful Logged In"
+    # return render_template('welcome.html')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -27,8 +32,10 @@ def login():
 
 		if completion == False:
 			error = 'Invalid Credentials. Please try again.'
+			return redirect(url_for('false_credentials'))
 		else:
-			return redirect(url_for('home'))
+			return redirect(url_for('welcome'))
+	
 	return render_template('login.html', name='GET')
 
 
